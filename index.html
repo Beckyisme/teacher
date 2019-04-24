@@ -95,10 +95,10 @@
 <body>
     <div id="main">
         <div id="firstPage">
-            <!-- <form>
+            <form>
                 <input type="text" placeholder="输入母校的名字" class="input_style" name="school" id="name"><br/>
                 <input type="text" placeholder="输入老师的名字" class="input_style" name="teacher" id="teacher">
-            </form> -->
+            </form>
             <div class="btn"></div>
         </div>
         <ul id="quest">
@@ -224,20 +224,20 @@
             var $start = $main.find(".btn");
 
             $start.on('touchstart', function(ev){
-            //    let name = $("#name").val();
-            //    let teacher = $("#teacher").val();
+               let name = $("#name").val();
+               let teacher = $("#teacher").val();
 
-            //    if(name == '' || teacher == ''){
-            //         alert('请输入学校名字和老师名字哦！')
-            //    }
-            //    else{
+               if(name == '' || teacher == ''){
+                    alert('请输入学校名字和老师名字哦！')
+               }
+               else{
                    $("#firstPage").animate({opacity: 0}, 1000, function(){
                         $(this).remove();
                         inAn(0);
                         slideList()
                    })
                     
-            //    }
+               }
             })
         }
         
