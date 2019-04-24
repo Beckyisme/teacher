@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="viewport" content="width=750, user-scalable=no">
+    <title>teacher</title>
+    <script src="jquery.min.js"></script>
+    <style>
+        *{ margin:0; padding:0;}
+        #main{
+            width:750px;
+            height:1334px;
+            position: relative;
+            overflow: hidden;
+        }
+        #firstPage{
+            width:100%;
+            height:100%;
+            position: absolute;
+            left:0;
+            top:0;
+            background-size:cover;
+            background-image: url(imgs/11.png);
+            z-index:10;
+        }
+        #firstPage .btn{ width: 401px; height:85px; background:url(imgs/btn.png) no-repeat;position: absolute; top:65%; left:22.4%;}
+        #firstPage form{ position: absolute; top:51%; left:22.4%;}
+        #firstPage form .input_style{ width: 401px; height:70px; background: #1a3286; color:#fff; font-size:24px; padding-left:10px;}
+        #lastPage{
+            width:100%;
+            height:100%;
+            position: absolute;
+            left:0;
+            top:0;
+            background-size:cover;
+            background-image: url(imgs/22.png);
+            z-index:10;
+            display:none;
+        }
+        #quest{
+            width:100%;
+            height:100%;
+            position: absolute;
+            left:0;
+            top:0;
+            background-size:cover;
+            background-image: url(imgs/b1.png);
+        }
+        /* 答题区 */
+        #quest > li{width:100%;height:100%;display:none;z-index:5}
+        #quest > li:nth-of-type(1){display:block}
+        #quest > li:nth-of-type(2){}
+        #quest > li:nth-of-type(3){}
+        #quest > li:nth-of-type(4){}
+       
+        .question_title{
+            width:414px;
+            height:317px;
+            position: absolute;
+            top:18%;
+            left:8%;
+        }
+        .question_title_1{background:url(imgs/a_1.png) no-repeat;}
+        .question_title_2{background:url(imgs/b_1.png) no-repeat;}
+        .question_title_3{background:url(imgs/c_1.png) no-repeat;}
+        .question_title_4{background:url(imgs/d_1.png) no-repeat;}
+
+        /* 答案区 */
+        #quest .child {width:700px; position: absolute; top:45%; left:8%;}
+        #quest .child li{width:100%; height:74px;margin-bottom:10px;}
+
+        #quest .child1 li:nth-of-type(1){ background:url(imgs/a_1_a.png) no-repeat;}
+        #quest .child1 li:nth-of-type(2){ background:url(imgs/a_1_b.png) no-repeat;}
+        #quest .child1 li:nth-of-type(3){ background:url(imgs/a_1_c.png) no-repeat;}
+        #quest .child1 li:nth-of-type(4){ background:url(imgs/a_1_d.png) no-repeat;}
+
+        #quest .child2 li:nth-of-type(1){ background:url(imgs/b_1_a.png) no-repeat;}
+        #quest .child2 li:nth-of-type(2){ background:url(imgs/b_1_b.png) no-repeat;}
+        #quest .child2 li:nth-of-type(3){ background:url(imgs/b_1_c.png) no-repeat;}
+        #quest .child2 li:nth-of-type(4){ background:url(imgs/b_1_d.png) no-repeat;}
+
+        #quest .child3 li:nth-of-type(1){ background:url(imgs/c_1_a.png) no-repeat;}
+        #quest .child3 li:nth-of-type(2){ background:url(imgs/c_1_b.png) no-repeat;}
+        #quest .child3 li:nth-of-type(3){ background:url(imgs/c_1_c.png) no-repeat;}
+        #quest .child3 li:nth-of-type(4){ background:url(imgs/c_1_d.png) no-repeat;}
+
+        #quest .child4 li:nth-of-type(1){ background:url(imgs/d_1_a.png) no-repeat;}
+        #quest .child4 li:nth-of-type(2){ background:url(imgs/d_1_b.png) no-repeat;}
+        #quest .child4 li:nth-of-type(3){ background:url(imgs/d_1_c.png) no-repeat;}
+        #quest .child4 li:nth-of-type(4){ background:url(imgs/d_1_d.png) no-repeat;}
+        
+    </style>
+</head>
+<body>
+    <div id="main">
+        <div id="firstPage">
+            <form>
+                <input type="text" placeholder="输入母校的名字" class="input_style" name="school" id="name"><br/>
+                <input type="text" placeholder="输入老师的名字" class="input_style" name="teacher" id="teacher">
+            </form>
+            <div class="btn"></div>
+        </div>
+        <ul id="quest">
+            <!-- 1 -->
+            <li>
+                <div class="question_title question_title_1"></div>
+                <ul class="child child1">
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+            </li>
+            <!-- 2 -->
+            <li>
+                <div class="question_title question_title_2"></div>
+                <ul class="child child2">
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+            </li>
+            <!-- 3 -->
+            <li>
+                <div class="question_title question_title_3"></div>
+                <ul class="child child3">
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+            </li>
+            <!-- 4 -->
+            <li>
+                <div class="question_title question_title_4"></div>
+                <ul class="child child4">
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+            </li>
+        </ul>   
+        <div id="lastPage"></div>
+    </div>
+</body>
+<script>
+    $(function(){
+        var $main = $('#main');
+        var viewHeight = $(window).height();
+        var descW = 750;
+        var descH = 1334;
+        $main.css('height', viewHeight);
+
+        var $list = $("#quest");
+        var $li = $list.find(">li");
+        all_out();
+
+       
+        //开始答题，并切换题目
+       
+        start();
+
+        function slideList(){
+            let nowIndex = 0;
+            let nextIndex = 0;
+
+            $li.on("touchstart", function(){
+                nextIndex = nowIndex + 1;
+                $li.eq(nowIndex).find("li").on('touchend', function(ev){
+                    outAn(nowIndex);
+                    $li.eq(nextIndex).show();
+                    setTimeout(() => {
+                        inAn(nextIndex);
+                        nowIndex = nextIndex;
+                        //答到最后一道题的时候
+                        if(nowIndex == 4){
+                            $list.animate({opacity: 0}, 1000, function(){
+                                $(this).remove();
+                                
+                            })
+                            $("#lastPage").show().animate(1000, function(){
+                                $(this).show();
+                            })
+                        }
+                    }, 100);
+                })
+            })
+  
+        }
+
+        function inAn(index){
+            var $questTitle = $li.eq(index).find('.question_title');
+            var $liChild = $li.eq(index).find("li");
+            $questTitle.css("transform", "translate(0, 0)");
+            $questTitle.css("transition", ".5s");
+            $questTitle.css("opacity", "1");
+            $liChild.css("transform", "translate(0, 0)");
+            $liChild.css("transition", ".5s")
+            $liChild.css("opacity", "1");
+        }
+
+        function outAn(index){
+            var $questTitle = $li.eq(index).find('.question_title');
+            var $liChild = $li.eq(index).find("li");
+            $questTitle.css("transition", "");
+            $liChild.css("transition", "")
+            $questTitle.css("transform", "translate(-200px, 0)");
+            $questTitle.css("opacity", "0");
+            $liChild.css("transform", "translate(400px, 0)");
+            $liChild.css("opacity", "0");
+        }
+
+        function all_out(){
+            outAn(0);
+            outAn(1);
+            outAn(2);
+            outAn(3);
+        }
+       
+        function start(){
+            var $start = $main.find(".btn");
+
+            $start.on('touchstart', function(ev){
+               let name = $("#name").val();
+               let teacher = $("#teacher").val();
+
+               if(name == '' || teacher == ''){
+                    alert('请输入学校名字和老师名字哦！')
+               }
+               else{
+                   $("#firstPage").animate({opacity: 0}, 1000, function(){
+                        $(this).remove();
+                        inAn(0);
+                        slideList()
+                   })
+                    
+               }
+            })
+        }
+        
+    })
+</script>
+</html>
