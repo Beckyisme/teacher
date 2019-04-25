@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="viewport" content="width=750, user-scalable=no, target-densityDpi=device-dpi">
+    <meta name="viewport" content="width=750, user-scalable=no, target-densityDpi=device-dpi, viewport-fit=cover">
     <title>teacher</title>
     <script src="jquery.min.js"></script>
+    <script src="judge.js"></script>
     <style>
         *{ margin:0; padding:0;}
         #main{
@@ -13,10 +14,11 @@
             height:1334px;
             position: relative;
             overflow: hidden;
+            display:none;
         }
         #firstPage{
-            width:100%;
-            height:100%;
+            width:750px;
+            height:1334px;
             position: absolute;
             left:0;
             top:0;
@@ -108,9 +110,11 @@
             margin-left:-40px;
             margin-top:-40px;
         }
+        #web{ display: none; text-align:center; margin-top:200px;}
     </style>
 </head>
 <body>
+    <div id="web">请在浏览器端打开</div>
     <div id="main">
         <div id="loading">
             <img src="imgs/loading.gif"/>
@@ -170,6 +174,7 @@
 <script>
     $(function(){
         var $main = $('#main');
+        var $web = $('#web');
         var viewHeight = $(window).height();
         var descW = 750;
         var descH = 1334;
@@ -177,12 +182,22 @@
 
         var $list = $("#quest");
         var $li = $list.find(">li");
-        all_out();
 
-       
-        //开始答题，并切换题目
-        img_loading();
-        start();
+        if(IsPC()){
+            $web.show();
+        }
+        else{
+            $main.show();
+            all_out();
+            //开始答题，并切换题目
+            img_loading();
+            start(); 
+        }
+
+        if(isIphonex()){
+            // $("#firstPage").css({"background-image":"url(这里填图片路径)"});
+            $("#lastPage").css({"background-image":"url(imgs/22_3.png)"});
+        }
 
         function slideList(){
             let nowIndex = 0;
@@ -202,7 +217,8 @@
                                 $(this).remove();
                                 
                             })
-                            $("#lastPage").show().animate(1000, function(){
+
+                            $last_page.show().animate(1000, function(){
                                 $(this).show();
                             })
                         }
