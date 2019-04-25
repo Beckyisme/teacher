@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>测试手机兼容性</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/index.css">
+    <script>
+        // 还原像素比
+        let pixel = 1 / window.devicePixelRatio;
+        document.write(`<meta name="viewport" content="width=device-width, initial-scale=${pixel}, minimum-scale=${pixel}, maximum-scale=${pixel}">`)
+        
+        // 设置根元素字体大小
+        let html = document.getElementsByTagName("html")[0];
+        let w = html.getBoundingClientRect().width;
+        let h = document.documentElement.clientHeight;
+        alert('高：'+h);
+        html.style.fontSize = w / 16 + 'px'; 
+
+        
+    </script>
+</head>
+<body>
+    <div id="main"></div>  
+</body>
+</html>

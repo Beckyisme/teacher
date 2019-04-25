@@ -1,0 +1,6 @@
+*{padding: 0; margin:0}
+/*取消a标签手指按下时出现的黑色遮罩层*/
+a{ -webkit-tap-highlight-color: transparent; text-decoration: none;}
+/*取消ios下输入框的圆角*/
+input{ -webkit-appearance: none;} 
+ul, li{list-style-type: none;}
