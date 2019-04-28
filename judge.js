@@ -42,3 +42,27 @@ function isIphonex(){
     return false;
 }
 
+//强制横屏方法
+function checkScreenDirection(dom, screen_w, screen_h) {
+    let $wrapper = $(dom);
+
+    if (screen_w >= screen_h) {
+        console.log('横屏')
+        $wrapper.css({
+            'width':  `${screen_w}px`,
+            'height': `${screen_h}px`,
+            'transform':  `rotate(0)`,
+            'transform-origin': `0 0`
+        })
+    }
+    else { // 竖屏
+        console.log('竖屏')
+        $wrapper.css({
+            'width':  `${screen_h}px`,
+            'height': `${screen_w}px`,
+            'transform':  `rotate(90deg)`,
+            'transform-origin': `${screen_w / 2}px ${screen_h / 2}px`
+        })
+    }
+}
+
