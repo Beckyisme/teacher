@@ -17,7 +17,6 @@
             left: 50%;
             margin-left: -375px;
             transform-origin: top;
-            /* display:none; */
         }
         #firstPage{
             width: 100%;
@@ -25,11 +24,94 @@
             position: absolute;
             top: 0;
             left: 0;
-            background: url(imgs/11.png) no-repeat;  
+            background: url(imgs/11.png) no-repeat; 
+            z-index:10px; 
         }
         #firstPage .btn{ width: 400px; height:85px; background:url(imgs/btn.png) no-repeat;position: absolute; top:730px; left:50%; margin-left:-200px;}
         #firstPage form{ position: absolute; top:550px; left:50%; margin-left:-200px;}
         #firstPage form .input_style{ width: 400px; height:70px; background: #1a3286; color:#fff; font-size:24px; padding-left:10px; margin-bottom:5px;}
+    
+        #loading{
+            width:100%;
+            height:100%;
+            position: absolute;
+            left:0;
+            top:0;
+            z-index:20;
+            background:#fff;
+        }
+        #loading img{
+            width:80px;
+            height:80px;
+            position: absolute;
+            left:50%;
+            top:50%;
+            margin-left:-40px;
+            margin-top:-40px;
+        }
+        #quest{
+            width:100%;
+            height:100%;
+            position: absolute;
+            left:0;
+            top:0;
+            background: url(imgs/b1.png) no-repeat;
+            display:none;
+        }
+        /* 答题区 */
+        #quest > li{width:100%;height:100%;display:none;z-index:5}
+        #quest > li:nth-of-type(1){display:block}
+        #quest > li:nth-of-type(2){}
+        #quest > li:nth-of-type(3){}
+        #quest > li:nth-of-type(4){}
+       
+        .question_title{
+            width:414px;
+            height:317px;
+            position: absolute;
+            top:220px;
+            left:65px;
+        }
+        .question_title_1{background:url(imgs/a_1.png) no-repeat;}
+        .question_title_2{background:url(imgs/b_1.png) no-repeat;}
+        .question_title_3{background:url(imgs/c_1.png) no-repeat;}
+        .question_title_4{background:url(imgs/d_1.png) no-repeat;}
+
+        /* 答案区 */
+        #quest .child {width:700px; position: absolute; top:550px; left:65px;}
+        #quest .child li{width:100%; height:74px;margin-bottom:10px;}
+
+        #quest .child1 li:nth-of-type(1){ background:url(imgs/a_1_a.png) no-repeat;}
+        #quest .child1 li:nth-of-type(2){ background:url(imgs/a_1_b.png) no-repeat;}
+        #quest .child1 li:nth-of-type(3){ background:url(imgs/a_1_c.png) no-repeat;}
+        #quest .child1 li:nth-of-type(4){ background:url(imgs/a_1_d.png) no-repeat;}
+
+        #quest .child2 li:nth-of-type(1){ background:url(imgs/b_1_a.png) no-repeat;}
+        #quest .child2 li:nth-of-type(2){ background:url(imgs/b_1_b.png) no-repeat;}
+        #quest .child2 li:nth-of-type(3){ background:url(imgs/b_1_c.png) no-repeat;}
+        #quest .child2 li:nth-of-type(4){ background:url(imgs/b_1_d.png) no-repeat;}
+
+        #quest .child3 li:nth-of-type(1){ background:url(imgs/c_1_a.png) no-repeat;}
+        #quest .child3 li:nth-of-type(2){ background:url(imgs/c_1_b.png) no-repeat;}
+        #quest .child3 li:nth-of-type(3){ background:url(imgs/c_1_c.png) no-repeat;}
+        #quest .child3 li:nth-of-type(4){ background:url(imgs/c_1_d.png) no-repeat;}
+
+        #quest .child4 li:nth-of-type(1){ background:url(imgs/d_1_a.png) no-repeat;}
+        #quest .child4 li:nth-of-type(2){ background:url(imgs/d_1_b.png) no-repeat;}
+        #quest .child4 li:nth-of-type(3){ background:url(imgs/d_1_c.png) no-repeat;}
+        #quest .child4 li:nth-of-type(4){ background:url(imgs/d_1_d.png) no-repeat;}
+
+        #lastPage{
+            width:100%;
+            height:100%;
+            position: absolute;
+            left:0;
+            top:0;
+            background-size:cover;
+            background-image: url(imgs/22.png);
+            z-index:10;
+            display:none;
+        }
     </style>
     <script>
         $(function(){
@@ -39,18 +121,131 @@
             //设置根元素字体大小
             // let screen_w = $(window).width();
             // $("html").css('fontSize', `${screen_w / 16}px`)
-            //初始化背景图片缩放比例
+            //初始化背景图片缩放比例, 只缩放最外层大盒子
             let $main = $("#main");
             let desc_w = 750, desc_h = 1205;
             let screen_h = $(window).height();
             $main.css('transform', `scale(${ screen_h / desc_h })`);
 
+            //h5相关操作
+            let $list = $("#quest");
+            let $li = $list.find(">li");    
+           
+            img_loading();  
+            all_out();    
 
+            //start
+            var $start = $main.find(".btn");
+            $start.on('touchstart', function(ev){
+                let name = $("#name").val();
+                let teacher = $("#teacher").val();
+
+                if(name == '' || teacher == ''){
+                    alert('请输入学校名字和老师名字哦！')
+                }
+                else{
+                    $("#firstPage").animate({opacity: 0}, 1000, function(){
+                        $(this).remove();
+                        $('#quest').show();
+                        slideList()
+                        setTimeout(function(){
+                            inAn(0);
+                        },100)
+                        
+                    })      
+                }
+            })
+
+            function inAn(index){
+                var $questTitle = $li.eq(index).find('.question_title');
+                var $liChild = $li.eq(index).find("li");
+                $questTitle.css("transform", "translate(0, 0)");
+                $questTitle.css("transition", ".5s");
+                $questTitle.css("opacity", "1");
+                $liChild.css("transform", "translate(0, 0)");
+                $liChild.css("transition", ".5s")
+                $liChild.css("opacity", "1");
+            }
+
+            function outAn(index){
+                var $questTitle = $li.eq(index).find('.question_title');
+                var $liChild = $li.eq(index).find("li");
+                $questTitle.css("transition", "");
+                $liChild.css("transition", "")
+                $questTitle.css("transform", "translate(-200px, 0)");
+                $questTitle.css("opacity", "0");
+                $liChild.css("transform", "translate(400px, 0)");
+                $liChild.css("opacity", "0");
+            }
+
+            function img_loading(){
+                let arr = ['11.png',  '22.png', 'a_1_a.png', 'a_1_b.png', 'a_1_c.png', 'a_1_d.png', 'a_1.png', 'b1.png', 'b_1.png', 'b_1_a.png', 'b_1_b.png', 'b_1_c.png', 'b_1_d.png',
+                'btn.png', 'c_1_a.png', 'c_1_b.png', 'c_1_c.png', 'c_1_d.png', 'c_1.png', 'd_1_a.png', 'd_1_b.png', 'd_1_c.png', 'd_1_d.png', 'd_1.png']
+
+                let $loading = $("#loading");
+                let iNow = 0;
+
+                for(let i = 0; i < arr.length; i++){
+                    let objImg = new Image();
+                    objImg.src = 'imgs/'+arr[i];
+                    objImg.onload = function(){
+                        iNow++;
+                        if(iNow == arr.length){
+                            $loading.animate({opacity: 0}, 1000, function(){
+                                $(this).remove();
+                            })
+                        }
+                    }
+                    objImg.onerror= function(){
+                        $loading.animate({opacity: 0}, 1000, function(){
+                            $(this).remove();
+                        })
+                    }
+                }
+            }
+
+            function slideList(){
+                let nowIndex = 0;
+                let nextIndex = 0;
+
+                $li.on("touchstart", function(){
+                    nextIndex = nowIndex + 1;
+                    $li.eq(nowIndex).find("li").on('touchend', function(ev){
+                        outAn(nowIndex);
+                        $li.eq(nextIndex).show();
+                        setTimeout(() => {
+                            inAn(nextIndex);
+                            nowIndex = nextIndex;
+                            //答到最后一道题的时候
+                            if(nowIndex == 4){
+                                $list.animate({opacity: 0}, 1000, function(){
+                                    $(this).remove();
+                                    
+                                })
+
+                                $("#lastPage").show().animate(1000, function(){
+                                    $(this).show();
+                                })
+                            }
+                        }, 100);
+                    })
+                })
+            }
+
+            function all_out(){
+                outAn(0);
+                outAn(1);
+                outAn(2);
+                outAn(3);
+            }
         })
     </script>
 </head>
 <body>
     <div id="main">
+        <div id="loading">
+            <img src="imgs/loading.gif"/>
+        </div>
         <div id="firstPage">
             <form>
                 <input type="text" placeholder="输入母校的名字" class="input_style" name="school" id="name"><br/>
@@ -58,9 +253,50 @@
             </form>
             <div class="btn"></div>
         </div>
+        <ul id="quest">
+            <!-- 1 -->
+            <li>
+                <div class="question_title question_title_1"></div>
+                <ul class="child child1">
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+            </li>
+            <!-- 2 -->
+            <li>
+                <div class="question_title question_title_2"></div>
+                <ul class="child child2">
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+            </li>
+            <!-- 3 -->
+            <li>
+                <div class="question_title question_title_3"></div>
+                <ul class="child child3">
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+            </li>
+            <!-- 4 -->
+            <li>
+                <div class="question_title question_title_4"></div>
+                <ul class="child child4">
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+            </li>
+        </ul> 
+        <div id="lastPage"></div>
+
     </div>
-    <script>
-      
-    </script>
 </body>
 </html>
