@@ -2,26 +2,52 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, user-scalable=no, target-densityDpi=device-dpi, viewport-fit=cover">
     <title>测试手机兼容性</title>
     <link rel="stylesheet" href="css/common.css">
-    <link rel="stylesheet" href="css/index.css">
+    <script src="jquery.min.js"></script>
+    <style>
+        body{ padding:0; margin:0;}
+        html{
+            /* overflow: hidden; */
+        }
+        #main{
+            width:750px;
+            height:1205px;
+            position: absolute;
+            top:0;
+            left:50%;
+            margin-left:-375px;
+            transform-origin: top;
+        }
+        #first{
+            width:100%;
+            height:100%;
+            background:url('imgs/11.png') no-repeat;
+            position:absolute; 
+            top:0; 
+            left:0;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="main">
+        <div id="first"></div>
+    </div>  
     <script>
-        // 还原像素比
-        let pixel = 1 / window.devicePixelRatio;
-        document.write(`<meta name="viewport" content="width=device-width, initial-scale=${pixel}, minimum-scale=${pixel}, maximum-scale=${pixel}">`)
-        
-        // 设置根元素字体大小
-        let html = document.getElementsByTagName("html")[0];
-        let w = html.getBoundingClientRect().width;
-        let h = document.documentElement.clientHeight;
-        alert('高：'+h);
-        html.style.fontSize = w / 16 + 'px'; 
+        var $main = $("#main");
+        var de_w = 750;
+        var de_h = 1205;
+        var screen_w = $(window).width();
+        var screen_h = $(window).height();
+
+        function init(){
+            $main.css('transform','scale('+( screen_h/de_h )+')');
+        }
+        init()
 
         
     </script>
-</head>
-<body>
-    <div id="main"></div>  
 </body>
 </html>
