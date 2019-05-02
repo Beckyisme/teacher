@@ -22,8 +22,6 @@
         #vi{
             width:100%;
             height:100%;
-            z-index: 10;
-            display:none;
         }
         #box{
             position: absolute;
@@ -68,22 +66,24 @@
         let corrent = 0;
 
         //如果打开的设备是pc端禁掉，只支持手机移动端设备
-        let $pic_tip = $("#pic_tip");
-        let $scroll_tip = $("#scroll_tip");
-        if(IsPC()){
-            $pic_tip.show();
-        }
-        else{
-        //判断移动端是横屏还是竖屏
-            if(checkScreenDirection('#main', screen_w, screen_h) == 's_scroll'){
-                $scroll_tip.show();
-            }
-            else{
-                $scroll_tip.hide();
-                $video.show();
-                $box.show();
-            }
-        }
+        // let $pic_tip = $("#pic_tip");
+        // let $scroll_tip = $("#scroll_tip");
+        // if(IsPC()){
+        //     $pic_tip.show();
+        // }
+        // else{
+        // //判断移动端是横屏还是竖屏
+        //     if(checkScreenDirection('#main', screen_w, screen_h) == 's_scroll'){
+        //         $scroll_tip.show();
+        //     }
+        //     else{
+        //         $scroll_tip.hide();
+        //         $video.show();
+        //         $box.show();
+        //     }
+        // }
+        // $video.fullScreen = true;
+        console.log($video);
         
         
 
